@@ -8,6 +8,34 @@
       "when": 1718213118549,
       "tag": "0000_chief_sentinel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1718309204085,
+      "tag": "0001_dashing_carlie_cooper",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1718309696565,
+      "tag": "0002_graceful_maximus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1718310991559,
+      "tag": "0003_steep_mercury",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1718311167834,
+      "tag": "0004_huge_christian_walker",
+      "breakpoints": true
     }
   ]
 }

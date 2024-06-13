@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -8,7 +8,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { createTable } from "../schema";
-import { users } from "./users";
+import { categories } from "./categories";
+import { tags } from "./tags";
 
 export const posts = createTable(
   "posts",
@@ -17,9 +18,6 @@ export const posts = createTable(
     title: varchar("name", { length: 256 }).notNull(),
     published: boolean("published"),
     content: text("content").notNull(),
-    userId: varchar("user_id", { length: 255 })
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -29,3 +27,10 @@ export const posts = createTable(
     titleIndex: index("title_idx").on(post.title),
   }),
 );
+
+export const postRelations = relations(posts, ({ many }) => {
+  return {
+    categories: many(categories),
+    tags: many(tags),
+  };
+});
