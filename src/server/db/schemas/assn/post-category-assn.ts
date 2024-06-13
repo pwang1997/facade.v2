@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { primaryKey, serial } from "drizzle-orm/pg-core";
 import { createTable } from "../../schema";
 import { categories } from "../categories";
@@ -18,4 +19,18 @@ export const postCategoryAssn = createTable(
       pk: primaryKey({ columns: [table.postId, table.categoryId] }),
     };
   },
+);
+
+export const postCategoryAssnRelations = relations(
+  postCategoryAssn,
+  ({ one }) => ({
+    post: one(posts, {
+      fields: [postCategoryAssn.postId],
+      references: [posts.id],
+    }),
+    category: one(categories, {
+      fields: [postCategoryAssn.categoryId],
+      references: [categories.id],
+    }),
+  }),
 );

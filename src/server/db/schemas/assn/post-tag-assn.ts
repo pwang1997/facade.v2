@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { primaryKey, serial } from "drizzle-orm/pg-core";
 import { createTable } from "../../schema";
 import { posts } from "../posts";
@@ -19,3 +20,14 @@ export const postTagAssn = createTable(
     };
   },
 );
+
+export const postTagAssnRelations = relations(postTagAssn, ({ one }) => ({
+  post: one(posts, {
+    fields: [postTagAssn.postId],
+    references: [posts.id],
+  }),
+  tag: one(tags, {
+    fields: [postTagAssn.tagId],
+    references: [tags.id],
+  }),
+}));
