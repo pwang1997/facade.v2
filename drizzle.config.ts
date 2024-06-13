@@ -10,4 +10,6 @@ export default {
     url: env.DATABASE_URL,
   },
   tablesFilter: ["knowledge_planet_*"],
+  verbose : true,
+  strict : true
 } satisfies Config;
