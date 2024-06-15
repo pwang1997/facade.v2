@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { tags } from "~/server/db/schemas/tags";
 
 export const tagInput = z.object({
@@ -9,7 +9,7 @@ export const tagInput = z.object({
 });
 
 export const tagRouter = createTRPCRouter({
-  list: protectedProcedure
+  list: publicProcedure
     .input(
       z.object({
         limit: z.number().default(20),
@@ -23,11 +23,11 @@ export const tagRouter = createTRPCRouter({
         .offset(input.offset)
         .limit(input.limit);
     }),
-  create: protectedProcedure
+  create: publicProcedure
     .input(tagInput)
     .mutation(async ({ ctx, input }) => {
       await ctx.db.insert(tags).values({
         name: input.name,
-      });
+      }).onConflictDoNothing({target : tags.name});
     }),
 });

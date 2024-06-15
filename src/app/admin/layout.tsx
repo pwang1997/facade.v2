@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import AdminSideNav from "../_components/admin-side-nav";
+import AdminTopNav from "../_components/admin-top-nav";
 
 export const metadata = {
   title: "Create T3 App",
@@ -18,11 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="flex min-h-dvh bg-gradient-to-b bg-second text-primary flex-row">
+      <body className="flex flex-row min-h-dvh">
         <AdminSideNav />
-        <TRPCReactProvider>
-          {children}
-        </TRPCReactProvider>
+        <div className="flex flex-col w-full">
+          <AdminTopNav />
+
+          <TRPCReactProvider>
+            {children}
+          </TRPCReactProvider>
+        </div>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
-import { Separator } from "~/components/ui/separator";
-import Title from "~/components/ui/title";
+import { Separator } from "~/app/components/ui/separator";
+import Title from "~/app/components/ui/title";
 
 export default async function Dashboard() {
 

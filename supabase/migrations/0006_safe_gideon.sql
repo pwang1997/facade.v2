@@ -1,0 +1,1 @@
+ALTER TABLE "knowledge_planet_tags" ADD CONSTRAINT "knowledge_planet_tags_name_unique" UNIQUE("name");

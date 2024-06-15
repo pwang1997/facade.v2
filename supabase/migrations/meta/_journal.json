@@ -43,6 +43,13 @@
       "when": 1718330565392,
       "tag": "0005_organic_mongu",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1718332459517,
+      "tag": "0006_safe_gideon",
+      "breakpoints": true
     }
   ]
 }

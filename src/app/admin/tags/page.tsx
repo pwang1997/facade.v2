@@ -1,8 +1,10 @@
-export default async function Dashboard() {
+import ListTags from "./_components/list-tags";
+
+export default async function TagPage() {
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      Tags placeholder
+    <main className="container pt-10 w-full bg-second">
+      <ListTags />
     </main>
   );
 }
