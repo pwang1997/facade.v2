@@ -9,10 +9,12 @@ export const tags = createTable("tags", {
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
 });
 
-export const tagRelations = relations(tags, ({many }) => {
+export const tagRelations = relations(tags, ({ many }) => {
   return {
     postTagAssn: many(postTagAssn),
   };

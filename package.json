@@ -44,7 +44,7 @@
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "server-only": "^0.0.1",
-    "supabase": "^1.176.4",
+    "supabase": "^1.176.10",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

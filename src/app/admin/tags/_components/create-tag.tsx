@@ -14,7 +14,7 @@ export function CreateTagForm() {
 
   const createTag = api.tag.create.useMutation({
     onSuccess: () => {
-      router.refresh();
+      router.push('/admin/tags');
       setName("");
     },
   });
