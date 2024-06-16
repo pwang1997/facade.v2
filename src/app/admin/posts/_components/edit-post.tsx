@@ -8,7 +8,7 @@ import { api } from "~/trpc/react";
 import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
 
-export function EditTagForm({ id }: { id: string }) {
+export function EditPostForm({ id }: { id: string }) {
     const [name, setName] = useState<string>("");
 
     const getTagById = api.tag.getById.useQuery({ id: id });

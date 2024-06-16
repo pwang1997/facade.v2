@@ -9,14 +9,16 @@ import { Button } from "~/components/ui/button"
 import { Checkbox } from "~/components/ui/checkbox"
 import { api } from "~/trpc/react"
 
-export type Category = {
+export type Post = {
   id: string
-  name: string
+  title: string
+  published : boolean
+  content : string
   createdAt: Date
   updatedAt: Date
 }
 
-export const columns: ColumnDef<Category>[] = [
+export const columns: ColumnDef<Post>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -41,7 +43,7 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Title",
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("name")}</div>
     ),
@@ -61,7 +63,7 @@ export const columns: ColumnDef<Category>[] = [
 
 
 function DataTableAction({ id }: { id: string }) {
-  const deleteTag = api.category.delete.useMutation();
+  const deleteTag = api.tag.delete.useMutation();
   const pathName = usePathname();
 
   const handleDelete = (id: number) => {

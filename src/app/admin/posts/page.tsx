@@ -1,14 +1,10 @@
-import { Separator } from "~/app/components/ui/separator";
-import Title from "~/app/components/ui/title";
+import ListPosts from "./_components/list-posts";
 
-export default async function Dashboard() {
+export default async function ListPostsPage() {
 
   return (
-    <main className="container mx-auto pt-10 w-full ">
-      <Title label="posts" />
-      <Separator />
-
-
-    </main>
-  );
+    <>
+      <ListPosts />
+    </>
+  )
 }

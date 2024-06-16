@@ -5,8 +5,8 @@ import {
 } from "@tanstack/react-table"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "~/app/components/ui/button"
-import { Checkbox } from "~/app/components/ui/checkbox"
+import { Button } from "~/components/ui/button"
+import { Checkbox } from "~/components/ui/checkbox"
 import { api } from "~/trpc/react"
 
 export type Tag = {

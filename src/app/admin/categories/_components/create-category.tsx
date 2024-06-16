@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { type FormEvent, useCallback, useState } from "react";
 
-import { Button } from "~/app/components/ui/button";
+import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
-import { Input } from "../../../components/ui/input";
-import { Label } from "../../../components/ui/label";
+import { Input } from "../../../../components/ui/input";
+import { Label } from "../../../../components/ui/label";
 
 export function CreateCategoryForm() {
   const router = useRouter();

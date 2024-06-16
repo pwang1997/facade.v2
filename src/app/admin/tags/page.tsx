@@ -1,6 +1,6 @@
 import ListTags from "./_components/list-tags";
 
-export default async function ListTagPage() {
+export default async function ListTagsPage() {
 
   return (
     <>

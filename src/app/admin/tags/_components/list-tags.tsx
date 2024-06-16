@@ -1,7 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "~/app/components/ui/data-table";
+import { DataTable } from "~/components/ui/data-table";
 import { api } from "~/trpc/react";
 import { columns, type Tag } from "./data-table";
 

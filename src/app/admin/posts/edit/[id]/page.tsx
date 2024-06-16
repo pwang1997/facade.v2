@@ -1,5 +1,5 @@
 import AdminTitle from "~/components/admin-title";
-import { EditCategoryForm } from "../../_components/edit-category";
+import { EditPostForm } from "../../_components/edit-post";
 
 export default async function EditTagPage({ params }: { params: { id: string } }) {
   const id = params.id;
@@ -7,7 +7,7 @@ export default async function EditTagPage({ params }: { params: { id: string } }
   return (
     <>
       <AdminTitle />
-      <EditCategoryForm id={id} />
+      <EditPostForm id={id} />
     </>
   );
 }
