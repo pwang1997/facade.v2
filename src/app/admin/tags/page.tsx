@@ -1,10 +1,10 @@
 import ListTags from "./_components/list-tags";
 
-export default async function TagPage() {
+export default async function AdminHome() {
 
   return (
-    <main className="container pt-10 w-full bg-second">
+    <>
       <ListTags />
-    </main>
-  );
+    </>
+  )
 }

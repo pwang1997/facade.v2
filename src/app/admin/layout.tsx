@@ -25,7 +25,9 @@ export default function RootLayout({
           <AdminTopNav />
 
           <TRPCReactProvider>
-            {children}
+            <main className="container pt-10 w-full bg-second">
+              {children}
+            </main>
           </TRPCReactProvider>
         </div>
       </body>
