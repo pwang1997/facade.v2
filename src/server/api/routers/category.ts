@@ -1,10 +1,8 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { postCategoryAssn } from "~/server/db/schemas/assn/post-category-assn";
 import { categories } from "~/server/db/schemas/categories";
 
 export const categoryRouter = createTRPCRouter({
@@ -22,6 +20,7 @@ export const categoryRouter = createTRPCRouter({
         .offset(input.offset)
         .limit(input.limit);
     }),
+
   create: publicProcedure
     .input(
       z.object({
@@ -41,8 +40,12 @@ export const categoryRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ id: z.string().transform(Number) }))
     .query(async ({ ctx, input }) => {
-      return await ctx.db.select().from(categories).where(eq(categories.id, input.id));
+      return await ctx.db
+        .select()
+        .from(categories)
+        .where(eq(categories.id, input.id));
     }),
+
   update: publicProcedure
     .input(
       z.object({
@@ -56,9 +59,25 @@ export const categoryRouter = createTRPCRouter({
         .set({ name: input.name })
         .where(eq(categories.id, input.id));
     }),
+
   delete: publicProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(categories).where(eq(categories.id, input.id));
+    }),
+
+  getPostCategoryAssn: publicProcedure
+    .input(z.object({ postId: z.string().transform(Number) }))
+    .query(async ({ ctx, input }) => {
+      const results = await ctx.db
+        .select()
+        .from(categories)
+        .innerJoin(
+          postCategoryAssn,
+          eq(postCategoryAssn.categoryId, categories.id),
+        )
+        .where(eq(postCategoryAssn.postId, input.postId));
+
+      return results.map((result) => result.postCategoryAssn);
     }),
 });

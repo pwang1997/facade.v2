@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
 import { tags } from "~/server/db/schemas/tags";
 
 export const tagRouter = createTRPCRouter({
@@ -19,6 +20,7 @@ export const tagRouter = createTRPCRouter({
         .offset(input.offset)
         .limit(input.limit);
     }),
+
   create: publicProcedure
     .input(
       z.object({
@@ -40,6 +42,7 @@ export const tagRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.db.select().from(tags).where(eq(tags.id, input.id));
     }),
+
   update: publicProcedure
     .input(
       z.object({
@@ -53,9 +56,21 @@ export const tagRouter = createTRPCRouter({
         .set({ name: input.name })
         .where(eq(tags.id, input.id));
     }),
+
   delete: publicProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(tags).where(eq(tags.id, input.id));
+    }),
+
+  getPostTagAssn: publicProcedure
+    .input(z.object({ postId: z.string().transform(Number) }))
+    .query(async ({ ctx, input }) => {
+      const results = await ctx.db
+        .select()
+        .from(tags)
+        .innerJoin(postTagAssn, eq(postTagAssn.tagId, tags.id))
+        .where(eq(postTagAssn.postId, input.postId));
+      return results.map((result) =>  result.postTagAssn);
     }),
 });
