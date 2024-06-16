@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { type FormEvent, useCallback, useState } from "react";
 
+import { Button } from "~/app/components/ui/button";
 import { api } from "~/trpc/react";
 import { Input } from "../../../components/ui/input";
 import { Label } from "../../../components/ui/label";
@@ -29,14 +30,13 @@ export function CreateTagForm() {
       className="flex flex-col gap-2"
     >
       <Label htmlFor="name">Name</Label>
-      <Input value={name} name="name" onChange={(e) => setName(e.target.value)} required />
-      <button
-        type="submit"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold transition hover:bg-white/20"
-        disabled={createTag.isPending}
-      >
-        {createTag.isPending ? "Submitting..." : "Submit"}
-      </button>
+      <Input value={name} name="name" onChange={(e) => setName(e.target.value)} placeholder="tag name" required />
+      <div>
+        <Button type="submit" disabled={createTag.isPending}
+        >
+          {createTag.isPending ? "Submitting..." : "Submit"}
+        </Button>
+      </div>
     </form>
   );
 }
