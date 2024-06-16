@@ -6,6 +6,7 @@ export default function AdminSideNav() {
             <ul className="space-y-2 font-medium">
                 <NavMenuItem href="/admin" name="Dashboard" />
                 <NavMenuItem href="/admin/tags" name="Tags" />
+                <NavMenuItem href="/admin/categories" name="Categories" />
                 <NavMenuItem href="/admin/posts" name="Posts" />
             </ul>
         </div >

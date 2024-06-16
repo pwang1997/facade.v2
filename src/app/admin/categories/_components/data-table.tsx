@@ -9,14 +9,14 @@ import { Button } from "~/app/components/ui/button"
 import { Checkbox } from "~/app/components/ui/checkbox"
 import { api } from "~/trpc/react"
 
-export type Tag = {
+export type Category = {
   id: string
   name: number
   createdAt: Date
   updatedAt: Date
 }
 
-export const columns: ColumnDef<Tag>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -61,7 +61,7 @@ export const columns: ColumnDef<Tag>[] = [
 
 
 function DataTableAction({ id }: { id: string }) {
-  const deleteTag = api.tag.delete.useMutation();
+  const deleteTag = api.category.delete.useMutation();
   const pathName = usePathname();
 
   const handleDelete = (id: number) => {

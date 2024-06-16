@@ -1,21 +1,64 @@
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import {
-    createTRPCRouter,
-    protectedProcedure,
-    publicProcedure,
+  createTRPCRouter,
+  publicProcedure
 } from "~/server/api/trpc";
+import { categories } from "~/server/db/schemas/categories";
 
 export const categoryRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  list: publicProcedure
+    .input(
+      z.object({
+        limit: z.number().default(20),
+        offset: z.number().default(0),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.db
+        .select()
+        .from(categories)
+        .offset(input.offset)
+        .limit(input.limit);
+    }),
+  create: publicProcedure
+    .input(
+      z.object({
+        id: z.number().optional(),
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .insert(categories)
+        .values({
+          name: input.name,
+        })
+        .onConflictDoNothing({ target: categories.name });
     }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
+  getById: publicProcedure
+    .input(z.object({ id: z.string().transform(Number) }))
+    .query(async ({ ctx, input }) => {
+      return await ctx.db.select().from(categories).where(eq(categories.id, input.id));
+    }),
+  update: publicProcedure
+    .input(
+      z.object({
+        id: z.string().transform(Number),
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db
+        .update(categories)
+        .set({ name: input.name })
+        .where(eq(categories.id, input.id));
+    }),
+  delete: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      await ctx.db.delete(categories).where(eq(categories.id, input.id));
+    }),
 });

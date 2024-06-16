@@ -57,6 +57,13 @@
       "when": 1718501213912,
       "tag": "0007_serious_martin_li",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1718507635273,
+      "tag": "0008_warm_sentinels",
+      "breakpoints": true
     }
   ]
 }

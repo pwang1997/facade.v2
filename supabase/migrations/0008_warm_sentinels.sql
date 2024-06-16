@@ -1,0 +1,2 @@
+ALTER TABLE "knowledge_planet_categories" ADD CONSTRAINT "knowledge_planet_categories_name_unique" UNIQUE("name");--> statement-breakpoint
+ALTER TABLE "knowledge_planet_posts" ADD CONSTRAINT "knowledge_planet_posts_name_unique" UNIQUE("name");

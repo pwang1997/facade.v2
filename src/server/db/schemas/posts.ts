@@ -15,7 +15,7 @@ export const posts = createTable(
   "posts",
   {
     id: serial("id").primaryKey(),
-    title: varchar("name", { length: 256 }).notNull(),
+    title: varchar("name", { length: 256 }).notNull().unique(),
     published: boolean("published"),
     content: text("content").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
