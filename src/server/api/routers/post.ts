@@ -2,6 +2,8 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { postCategoryAssn } from "~/server/db/schemas/assn/post-category-assn";
+import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
 import { posts } from "~/server/db/schemas/posts";
 
 export const postRouter = createTRPCRouter({
@@ -26,13 +28,13 @@ export const postRouter = createTRPCRouter({
         title: z.string(),
         published: z.boolean().default(false),
         content: z.string(),
-        tagIds: z.array(z.number()).optional(),
-        categoryIds: z.array(z.number()).optional(),
+        tagIds: z.array(z.number()).default([]),
+        categoryIds: z.array(z.number()).default([]),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db.transaction(async (tx) => {
-        const postId = await tx
+        const postIds = await tx
           .insert(posts)
           .values({
             title: input.title,
@@ -41,20 +43,17 @@ export const postRouter = createTRPCRouter({
           })
           .returning({ postId: posts.id });
 
-          console.log(postId);
+        const postId = postIds[0]?.postId as unknown as number;
 
-        // input.categoryIds.forEach(
-        //   (categoryId) =>
-        //     await tx
-        //       .insert(postCategoryAssn)
-        //       .values({ postId: postId, categoryId: categoryId }),
-        // );
-        // input.tagIds.forEach(
-        //   (tagId) =>
-        //     await tx
-        //       .insert(postTagAssn)
-        //       .values({ postId: postId, tagId: tagId }),
-        // );
+        const postCategoryAssnValues = input.categoryIds.map((id) => {
+          return { postId: postId, categoryId: id };
+        });
+        await tx.insert(postCategoryAssn).values(postCategoryAssnValues);
+
+        const postTagAssnValues = input.tagIds.map((id) => {
+          return { postId: postId, tagId: id };
+        });
+        await tx.insert(postTagAssn).values(postTagAssnValues);
       });
     }),
 

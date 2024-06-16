@@ -42,10 +42,10 @@ export const columns: ColumnDef<Post>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "title",
     header: "Title",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
+      <div className="capitalize">{row.getValue("title")}</div>
     ),
   },
   {
@@ -63,11 +63,11 @@ export const columns: ColumnDef<Post>[] = [
 
 
 function DataTableAction({ id }: { id: string }) {
-  const deleteTag = api.tag.delete.useMutation();
+  const deletePost = api.post.delete.useMutation();
   const pathName = usePathname();
 
   const handleDelete = (id: number) => {
-    deleteTag.mutate({ id });
+    deletePost.mutate({ id });
   };
   return (
     <>

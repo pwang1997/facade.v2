@@ -13,6 +13,11 @@ import { Label } from "../../../../components/ui/label";
 import { type Category } from "../../categories/_components/data-table";
 import { type Tag } from "../../tags/_components/data-table";
 
+
+export const getIdsByNames = (data: Category[] | Tag[], names: string[]) => {
+  return data?.filter((item) => names.includes(String(item?.name))).map(item => item?.id);
+}
+
 export function CreatePostForm() {
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -24,24 +29,18 @@ export function CreatePostForm() {
   const getTags = api.tag.list.useQuery({ offset: 0, limit: 1000 });
   const getCategories = api.category.list.useQuery({ offset: 0, limit: 1000 });
 
-
   const createPost = api.post.create.useMutation({
     onSuccess: () => {
       router.push('/admin/posts');
     },
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getIdsByNames = (data : object[], names : string[]) => {
-    return data?.filter((item) => names.includes(item?.name ?? '')).map(item => item?.id as string);
-  }
-
   const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createPost.mutate({
       title, published, content,
-      categoryIds : getIdsByNames(getCategories?.data as object[], selectedCategoryIds) as unknown as number[],
-      tagIds : getIdsByNames(getTags?.data as object[], selectedTagIds) as unknown as number[],
+      categoryIds: getIdsByNames(getCategories?.data as unknown as Category[], selectedCategoryIds) as unknown as number[],
+      tagIds: getIdsByNames(getTags?.data as unknown as Tag[], selectedTagIds) as unknown as number[],
     });
   }, [content, createPost, getCategories?.data, getTags?.data, published, selectedCategoryIds, selectedTagIds, title])
 
