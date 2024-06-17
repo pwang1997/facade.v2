@@ -18,8 +18,6 @@ export default function TopNav() {
     }
   }, [getCategories.data, getCategories.isLoading, getCategories.isSuccess])
 
-  console.log(categories);
-
   return (
     <header className='w-full sticky top-0 backdrop-blur transition-[background-color,border-width] border-x-0 flex justify-center z-10 pt-4'>
       <nav className='mx-auto flex max-w-4xl items-center justify-between  rounded-[24px] pl-4 pr-4 pt-2 pb-2
@@ -41,7 +39,7 @@ export default function TopNav() {
                   <Fragment key={category}>
                     <NavigationMenuItem>
                       <Link href={`/categories/${category}`} legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle() }>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                           {category}
                         </NavigationMenuLink>
                       </Link>

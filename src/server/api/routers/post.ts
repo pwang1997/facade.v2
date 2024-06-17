@@ -1,10 +1,12 @@
-import { eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { postCategoryAssn } from "~/server/db/schemas/assn/post-category-assn";
 import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
+import { categories } from "~/server/db/schemas/categories";
 import { posts } from "~/server/db/schemas/posts";
+import { tags } from "~/server/db/schemas/tags";
 
 export const postRouter = createTRPCRouter({
   list: publicProcedure
@@ -110,5 +112,43 @@ export const postRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(posts).where(eq(posts.id, input.id));
+    }),
+
+  getPostsByCategoryName: publicProcedure
+    .input(
+      z.object({
+        categoryName: z.string(),
+        offset: z.number().default(0).optional(),
+        limit: z.number().default(10).optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const results = await ctx.db
+        .select({
+          id: posts.id,
+          title: posts.title,
+          content: posts.content,
+          updatedAt: posts.updatedAt,
+        })
+        .from(posts)
+        .innerJoin(postCategoryAssn, eq(posts.id, postCategoryAssn.postId))
+        .innerJoin(categories, eq(categories.id, postCategoryAssn.categoryId))
+        .where(and(eq(posts.published, true), eq(categories.name, input.categoryName)))
+        .limit(input.limit ?? 10)
+        .offset(input.offset ?? 0);
+  
+      const postIds = results.map((post) => post.id);
+      const associatedTags = await ctx.db
+        .select({
+          postId: postTagAssn.postId,
+          tagName: tags.name,
+        })
+        .from(postTagAssn)
+        .innerJoin(tags, eq(postTagAssn.tagId, tags.id))
+        .where(sql`${postTagAssn.postId} in ${postIds}`)
+        .groupBy(postTagAssn.postId, tags.name);
+
+        console.log({ results, associatedTags })
+      return { results, associatedTags };
     }),
 });
