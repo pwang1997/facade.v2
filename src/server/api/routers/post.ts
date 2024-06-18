@@ -133,10 +133,15 @@ export const postRouter = createTRPCRouter({
         .from(posts)
         .innerJoin(postCategoryAssn, eq(posts.id, postCategoryAssn.postId))
         .innerJoin(categories, eq(categories.id, postCategoryAssn.categoryId))
-        .where(and(eq(posts.published, true), eq(categories.name, input.categoryName)))
+        .where(
+          and(
+            eq(posts.published, true),
+            eq(categories.name, input.categoryName),
+          ),
+        )
         .limit(input.limit ?? 10)
         .offset(input.offset ?? 0);
-  
+
       const postIds = results.map((post) => post.id);
       const associatedTags = await ctx.db
         .select({
@@ -148,7 +153,34 @@ export const postRouter = createTRPCRouter({
         .where(sql`${postTagAssn.postId} in ${postIds}`)
         .groupBy(postTagAssn.postId, tags.name);
 
-        console.log({ results, associatedTags })
       return { results, associatedTags };
+    }),
+
+  getPostByName: publicProcedure
+    .input(z.object({ postName: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const result = await ctx.db
+        .select()
+        .from(posts)
+        .where(eq(posts.title, input.postName));
+
+      const postId = result[0]?.id;
+
+      const associatedTags = await ctx.db
+        .select({
+          postId: postTagAssn.postId,
+          tagName: tags.name,
+        })
+        .from(postTagAssn)
+        .innerJoin(tags, eq(postTagAssn.tagId, tags.id))
+        .where(eq(postTagAssn.postId, postId))
+        .groupBy(postTagAssn.postId, tags.name);
+
+      console.log({
+        result,
+        associatedTags,
+      });
+
+      return { result : result[0], associatedTags };
     }),
 });

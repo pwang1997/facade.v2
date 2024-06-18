@@ -54,15 +54,18 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "typed.js": "^2.1.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "remark-gfm": "^4.0.0",
+    "react-markdown": "^9.0.1",
+    "rehype-highlight": "^7.0.0"
   },
   "devDependencies": {
     "@types/eslint": "^8.56.10",
-    "@types/node": "^20.14.2",
+    "@types/node": "^20.14.5",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
     "drizzle-kit": "^0.21.4",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.4",
