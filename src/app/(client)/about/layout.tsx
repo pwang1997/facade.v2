@@ -1,4 +1,3 @@
-import TopNav from "~/app/_components/top-nav";
 
 export const metadata = {
   title: "Create T3 App",
@@ -6,17 +5,12 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <TopNav />
-      <div className="container mx-auto pt-10">
-        {children}
-      </div>
-    </>
+    <>{children}</>
   );
 }

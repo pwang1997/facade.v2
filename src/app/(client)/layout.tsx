@@ -1,4 +1,4 @@
-import TopNav from "~/app/_components/top-nav";
+import TopNav from "../_components/top-nav";
 
 export const metadata = {
   title: "Create T3 App",
