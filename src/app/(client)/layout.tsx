@@ -1,3 +1,4 @@
+import Breadcrumb from "../_components/breadcrumb";
 import TopNav from "../_components/top-nav";
 
 export const metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({
     <>
       <TopNav />
       <div className="container mx-auto pt-10">
+        <Breadcrumb />
         {children}
       </div>
     </>
