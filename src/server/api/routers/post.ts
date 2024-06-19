@@ -1,4 +1,4 @@
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, like, or, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -181,6 +181,36 @@ export const postRouter = createTRPCRouter({
         associatedTags,
       });
 
-      return { result : result[0], associatedTags };
+      return { result: result[0], associatedTags };
+    }),
+
+  search: publicProcedure
+    .input(
+      z.object({
+        query: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const data = await ctx.db
+        .select({
+          postId: posts.id,
+          title: posts.title,
+          content: posts.content,
+          category: categories.name,
+        })
+        .from(postCategoryAssn)
+        .fullJoin(categories, eq(postCategoryAssn.categoryId, categories.id))
+        .fullJoin(posts, eq(postCategoryAssn.postId, posts.id))
+        .where(
+          and(
+            eq(posts.published, true),
+            or(
+              like(posts.content, `%${input.query}%`),
+              like(posts.title, `%${input.query}%`),
+            ),
+          ),
+        );
+
+      return data;
     }),
 });
