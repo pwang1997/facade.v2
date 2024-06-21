@@ -176,11 +176,6 @@ export const postRouter = createTRPCRouter({
         .where(eq(postTagAssn.postId, postId))
         .groupBy(postTagAssn.postId, tags.name);
 
-      console.log({
-        result,
-        associatedTags,
-      });
-
       return { result: result[0], associatedTags };
     }),
 
