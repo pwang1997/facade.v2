@@ -1,7 +1,8 @@
-import { Fragment, useCallback } from "react";
+import { useCallback } from "react";
+import { CommandGroup, CommandItem } from "../ui/command";
 import HighlightAndTruncateText from "./HighlightAndTruncateText";
 
-export default function SearchResult({ keyword, results }: { keyword: string, results: unknown[] }) {
+export default function SearchResult({ keyword, category, results }: { keyword: string, category: string, results: unknown[] }) {
 
     const researchResultItem = useCallback((post: unknown) => {
         return (
@@ -19,28 +20,18 @@ export default function SearchResult({ keyword, results }: { keyword: string, re
 
 
     return (
-        <div className="bg-white overflow-hidden transition-all sm:max-w-lg sm:w-full">
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div
-                    className="rounded-md shadow-lg bg-whitering-opacity-5"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                >
-                    <div className="py-1 flex flex-col gap-2" role="none">
-                        {
-                            results.map((result) => {
-                                return (
-                                    <Fragment key={result.postId}>
-                                        {researchResultItem(result)}
-                                    </Fragment>
-                                )
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+        <CommandGroup heading={category.toUpperCase()}>
+            {
+                results?.map((post, idx) => {
+                    return (
+                        <CommandItem key={idx}>
+                            {researchResultItem(post)}
+                        </CommandItem>
+                    )
+                })
+            }
+
+        </CommandGroup>
     )
 }
 
