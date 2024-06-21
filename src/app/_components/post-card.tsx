@@ -17,39 +17,28 @@ export default function PostCard({
     return (
         <Card>
             <CardHeader>
-                <CardTitle>
-                    <div className="flex justify-between">
-                        <Link href={`/posts/${title}`}>{title}</Link>
-                        <Link href={`/posts/${title}`}>Learn More</Link>
-                    </div>
+                <CardTitle className="flex justify-between">
+                    <Link href={`/posts/${title}`}>{title}</Link>
+                    <Link href={`/posts/${title}`}>Learn More</Link>
                 </CardTitle>
-                <CardDescription>
-                    <span className=' text-xs leading-5 text-gray-500 dark:bg-medium dark:text-white'>
-                        last updated at: {lastUpdatedAt}
-                    </span>
+                <CardDescription className=' text-xs leading-5 text-gray-500 dark:bg-medium dark:text-white'>
+                    last updated at: {lastUpdatedAt}
                 </CardDescription>
-
             </CardHeader>
-            <CardContent>
-                <p className='line-clamp-3 text-sm font-semibold leading-6 text-gray-900 dark:bg-medium dark:text-white'>{description}</p>
+            <CardContent className='line-clamp-3 text-sm font-semibold leading-6 text-gray-900 dark:bg-medium dark:text-white'>
+                {description}
             </CardContent>
-            <CardFooter>
-                <div className="flex gap-1">
-                    {
-                        associatedTags.map((tagName) => {
-                            return (
-                                <div key={tagName}>
-                                    <Badge>{tagName}</Badge>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-                {/* <div className="flex flex-row items-center text-xs leading-5 text-gray-500 dark:bg-medium dark:text-white">
-                    <EyeIcon />{views}
-                </div> */}
+            <CardFooter className="flex gap-1">
+                {
+                    associatedTags.map((tagName) => {
+                        return (
+                            <div key={tagName}>
+                                <Badge>{tagName}</Badge>
+                            </div>
+                        )
+                    })
+                }
             </CardFooter>
         </Card>
-
     )
 }
