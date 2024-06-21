@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
-import EyeIcon from "~/icons/EyeIcon";
 
 type PostCardProps = {
     title: string;
@@ -46,9 +45,9 @@ export default function PostCard({
                         })
                     }
                 </div>
-                <div className="flex flex-row items-center text-xs leading-5 text-gray-500 dark:bg-medium dark:text-white">
+                {/* <div className="flex flex-row items-center text-xs leading-5 text-gray-500 dark:bg-medium dark:text-white">
                     <EyeIcon />{views}
-                </div>
+                </div> */}
             </CardFooter>
         </Card>
 
