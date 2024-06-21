@@ -87,6 +87,13 @@ export default function TopNav() {
                 )
               })
             }
+             <NavigationMenuItem>
+              <Link href="/posts" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Posts
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
             <NavigationMenuItem>
               <Link href="/about" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
