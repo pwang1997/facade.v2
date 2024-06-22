@@ -1,3 +1,5 @@
+import Breadcrumb from "../_components/breadcrumb";
+import TopNav from "../_components/top-nav";
 
 export const metadata = {
   title: "Create T3 App",
@@ -11,6 +13,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>{children}</>
+    <>
+      <TopNav />
+      <div className="container mx-auto pt-10">
+        <Breadcrumb />
+        {children}
+      </div>
+    </>
   );
 }
