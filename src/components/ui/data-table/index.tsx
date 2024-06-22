@@ -50,13 +50,12 @@ export function DataTable({ data, columns }: { data: unknown[], columns: ColumnD
           // }
           className="max-w-sm"
         />
-
-        <Link href={`${path}/create`} className="block float-end">
-          <button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4
-                     focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2
-                      dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+        <Link href={`${path}/create`} className="">
+          <Button className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4
+                     focus:ring-gray-300 font-medium rounded-lg text-sm 
+                     dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
             Create
-          </button>
+          </Button>
         </Link>
       </div>
       <div className="rounded-md border">
