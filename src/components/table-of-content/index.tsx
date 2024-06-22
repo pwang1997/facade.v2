@@ -1,4 +1,6 @@
 // components/TableOfContents.js
+"use client";
+
 import { useEffect, useState } from 'react';
 
 const TableOfContents = ({ headings } : {headings : {level : number, title : string, id : string}[]}) => {

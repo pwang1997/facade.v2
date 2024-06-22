@@ -1,13 +1,9 @@
-"use client";
-
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import MarkdownRender from "~/app/_components/markdown-render";
-import { type Post } from "~/app/admin/posts/_components/data-table";
 import TableOfContents from "~/components/table-of-content";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
-import { type AssociatedTagProps } from "~/server/api/routers/post";
-import { api } from "~/trpc/react";
+import { api } from "~/trpc/server";
 
 interface ToCHeadingProps {
     id: string
@@ -27,23 +23,14 @@ const extractHeadings = (markdown: string): ToCHeadingProps[] => {
 };
 
 
-export default function PostPage({ params }: { params: { name: string } }) {
+export default async function PostPage({ params }: { params: { name: string } }) {
     const { name } = params;
 
-    const [post, setPost] = useState<Post>();
-    const [associatedTags, setAssociatedTags] = useState<AssociatedTagProps[]>();
-    const [tocHeadings, setTocHeadings] = useState<ToCHeadingProps[]>([]);
+    const postByName = await api.post.getPostByName({ postName: decodeURIComponent(name) });
+    const post = postByName.result;
+    const associatedTags = postByName.associatedTags;
 
-    const getPostsByCategories = api.post.getPostByName.useQuery({ postName: decodeURIComponent(name) });
-
-    useEffect(() => {
-        if (!getPostsByCategories.isLoading && getPostsByCategories.isSuccess) {
-            setPost(getPostsByCategories.data?.result as unknown as Post);
-            setAssociatedTags(getPostsByCategories.data?.associatedTags);
-        }
-    }, [getPostsByCategories.data, getPostsByCategories.isLoading, getPostsByCategories.isSuccess])
-
-    useEffect(() => setTocHeadings(extractHeadings(post?.content ?? '')), [post?.content]);
+    const tocHeadings = extractHeadings(post?.content ?? '');
 
     return (
         <div className="container grid  grid-cols-12 ">
