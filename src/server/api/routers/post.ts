@@ -153,6 +153,8 @@ export const postRouter = createTRPCRouter({
         .where(sql`${postTagAssn.postId} in ${postIds}`)
         .groupBy(postTagAssn.postId, tags.name);
 
+      console.log(associatedTags);
+
       return { results, associatedTags };
     }),
 
@@ -173,7 +175,7 @@ export const postRouter = createTRPCRouter({
         })
         .from(postTagAssn)
         .innerJoin(tags, eq(postTagAssn.tagId, tags.id))
-        .where(eq(postTagAssn.postId, postId))
+        .where(eq(postTagAssn.postId, postId!))
         .groupBy(postTagAssn.postId, tags.name);
 
       return { result: result[0], associatedTags };
@@ -209,3 +211,9 @@ export const postRouter = createTRPCRouter({
       return data;
     }),
 });
+
+
+export interface AssociatedTagProps {
+  postId : string | number
+  tagName : string
+}

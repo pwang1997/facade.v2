@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 "use client";
 
 import Link from "next/link";
@@ -11,7 +12,7 @@ import { api } from "~/trpc/react";
 export default function TopNav() {
   const getCategories = api.category.list.useQuery({ offset: 0, limit: 1000 });
 
-  const draggableRef = useRef(null);
+  const draggableRef = useRef<HTMLDivElement>(null);
 
   const [categories, setCategories] = useState<string[]>([]);
   const [show, setShow] = useState<boolean>(false);

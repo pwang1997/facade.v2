@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 "use client";
 
 import { Fragment, type KeyboardEvent, useState } from "react";
@@ -5,7 +6,7 @@ import { api } from "~/trpc/react";
 import { Command, CommandEmpty, CommandInput, CommandList } from "../ui/command";
 import SearchResult from "./SearchResult";
 
-type SearchDataProps = {
+export type SearchDataProps = {
   postId: number;
   title: string;
   content: string;
@@ -14,7 +15,7 @@ type SearchDataProps = {
 
 export function CommandLine() {
   const [query, setQuery] = useState('');
-  const [posts, setPosts] = useState<unknown>();
+  const [posts, setPosts] = useState<Record<string, SearchDataProps[]>>();
   const searchPosts = api.post.search.useQuery({ query: query }, {
     enabled: !!query
   });
@@ -25,14 +26,14 @@ export function CommandLine() {
 
       const data = searchPosts?.data as SearchDataProps[];
 
-      const groupByCategory = data.reduce((acc, post) => {
+      const groupByCategory  =  data.reduce((acc, post) => {
         const { category } = post;
         if (!Object.keys(acc).includes(category)) {
           acc[category] = [];
         }
         acc[category]?.push(post);
         return acc;
-      }, {});
+      }, {} as Record<string, SearchDataProps[]>);
 
       setPosts(groupByCategory);
     }
@@ -42,16 +43,16 @@ export function CommandLine() {
 
   return (
     <Command className="rounded-lg border shadow-md " shouldFilter={false}>
-      <CommandInput placeholder="Type a command or search..." value={query} onChangeCapture={(e) => setQuery(e.target.value)}
+      <CommandInput placeholder="Type a command or search..." value={query}  onChangeCapture={(e) => setQuery((e.currentTarget as HTMLInputElement).value)}
         onKeyDown={handleOnKeyDown}
       />
 
       <CommandList>
-        {Object.keys(posts ?? {})?.length > 0 && (
+        {!!posts && Object.keys(posts)?.length > 0 && (
           Object.keys(posts ?? {}).map((category) => {
             return (
               <Fragment key={category}>
-                <SearchResult keyword={query} category={category} results={posts[category] as unknown[]} />
+                <SearchResult keyword={query} category={category} results={posts[category]!} />
               </Fragment>
 
             )
