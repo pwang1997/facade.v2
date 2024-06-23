@@ -34,7 +34,7 @@ export default function Breadcrumb() {
 
   const breadcrumHref = (idx: number) => paths.slice(0, idx - 1).join("/");
 
-  if(paths.length === 1) return null;
+  if(paths.length === 1 || paths.includes("admin")) return null;
   return (
     <nav className='container flex pb-4' aria-label='Breadcrumb'>
       <ol className='inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse'>
