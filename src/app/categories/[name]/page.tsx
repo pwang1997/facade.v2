@@ -4,7 +4,7 @@ import { api } from "~/trpc/server";
 export default async function CategoryPage({ params }: { params: { name: string } }) {
     const { name } = params;
 
-    const postsByCategoryName = await api.post.getPostsByCategoryName({ categoryName: name });
+    const postsByCategoryName = await api.post.getPostsByCategoryName({ categoryName: decodeURIComponent(name) });
     const { results, associatedTags } = postsByCategoryName;
 
     return (
