@@ -1,7 +1,6 @@
-import HeroSection from "./_components/hero-section";
-import ShareSpace from "./_components/share-space";
-import WhereToFindMe from "./_components/where-to-find-me";
-
+import HeroSection from "../_components/hero-section";
+import ShareSpace from "../_components/share-space";
+import WhereToFindMe from "../_components/where-to-find-me";
 
 export default async function Home() {
 

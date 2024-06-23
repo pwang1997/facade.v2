@@ -3,8 +3,9 @@ import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import Breadcrumb from "./_components/breadcrumb";
-import TopNav from "./_components/top-nav";
+import Breadcrumb from "../_components/breadcrumb";
+import TopNav from "../_components/top-nav";
+
 
 export const metadata = {
   title: "Create T3 App",
