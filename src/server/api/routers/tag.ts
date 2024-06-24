@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -71,6 +71,38 @@ export const tagRouter = createTRPCRouter({
         .from(tags)
         .innerJoin(postTagAssn, eq(postTagAssn.tagId, tags.id))
         .where(eq(postTagAssn.postId, input.postId));
-      return results.map((result) =>  result.postTagAssn);
+      return results.map((result) => result.postTagAssn);
+    }),
+
+  getPostTagAssnsGroupByPostId: publicProcedure
+    .input(
+      z.object({
+        postIds: z.string().array().default([]),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const results = await ctx.db
+        .select({
+          postId: postTagAssn.postId,
+          tagId: postTagAssn.tagId,
+          tagName: tags.name,
+        })
+        .from(tags)
+        .innerJoin(postTagAssn, eq(postTagAssn.tagId, tags.id))
+        .where(sql`${postTagAssn.postId} in ${input.postIds}`);
+
+      return results.reduce(
+        (acc, item) => {
+          if (!acc[item.postId]) {
+            acc[item.postId] = [];
+          }
+          acc[item.postId]?.push(item);
+          return acc;
+        },
+        {} as Record<
+          number,
+          { postId: number; tagId: number; tagName: string }[]
+        >,
+      );
     }),
 });
