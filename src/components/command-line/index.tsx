@@ -26,7 +26,7 @@ export function CommandLine() {
 
       const data = searchPosts?.data as SearchDataProps[];
 
-      const groupByCategory  =  data.reduce((acc, post) => {
+      const groupByCategory  =  data?.reduce((acc, post) => {
         const { category } = post;
         if (!Object.keys(acc).includes(category)) {
           acc[category] = [];
