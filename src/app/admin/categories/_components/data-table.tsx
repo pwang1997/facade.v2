@@ -12,6 +12,7 @@ import { api } from "~/trpc/react"
 export type Category = {
   id: string
   name: string
+  parentId ?: string
   createdAt: Date
   updatedAt: Date
 }
