@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Fragment, useCallback, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 import CommandLineIcon from "~/icons/CommandLineIcon";
 import GitHubIcon from "~/icons/GitHubIcon";
 import { CommandLine } from "../command-line";
@@ -15,26 +15,7 @@ const defaultRoutes = [
 export default function NavMenu({ categories }: { categories: string[] }) {
     const paths = usePathname();
 
-    const draggableRef = useRef<HTMLDivElement>(null);
     const [show, setShow] = useState<boolean>(false);
-
-    const handleClose = useCallback((event: MouseEvent<HTMLDivElement>) => {
-        const { clientX, clientY } = event;
-
-        const isWithinComponent = (x: number, y: number) => {
-            if (!!draggableRef.current) {
-                const rect = draggableRef.current?.getBoundingClientRect();
-                return (
-                    x >= rect?.left && x <= rect?.right && y >= rect?.top && y <= rect?.bottom
-                );
-            }
-            return false;
-        };
-
-        if (!isWithinComponent(clientX, clientY)) {
-            setShow(false);
-        }
-    }, [setShow])
 
     if (paths.includes("admin")) return null;
 
@@ -44,16 +25,7 @@ export default function NavMenu({ categories }: { categories: string[] }) {
         bg-neutral-100 dark:bg-dark dark:text-white
         ' aria-label='Global'>
                 {
-                    show && (
-                        <div className={`hidden fixed inset-0 bg-gray-800 bg-opacity-75 sm:flex items-center z-50 w-screen  h-screen flex-col`} onClick={handleClose}
-                            onKeyDown={(e) => { if (e.key === 'Escape') setShow(false) }}>
-                            <div ref={draggableRef}>
-                                <div className="bg-white overflow-hidden transition-all sm:max-w-lg sm:w-full hover:cursor-pointer mx-auto w-xl rounded-lg mt-16" style={{ width: "100vw" }}>
-                                    <CommandLine />
-                                </div>
-                            </div>
-                        </div>
-                    )
+                    show && <CommandLine setShow={setShow} />
                 }
                 <NavigationMenu >
                     <NavigationMenuList>
