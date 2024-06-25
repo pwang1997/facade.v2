@@ -26,7 +26,7 @@ export const categoryRouter = createTRPCRouter({
       z.object({
         id: z.number().optional(),
         name: z.string(),
-        parentId : z.number().optional()
+        parentId: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -34,7 +34,7 @@ export const categoryRouter = createTRPCRouter({
         .insert(categories)
         .values({
           name: input.name,
-          parentId : input.parentId
+          parentId: input.parentId,
         })
         .onConflictDoNothing({ target: categories.name });
     }),
@@ -53,12 +53,16 @@ export const categoryRouter = createTRPCRouter({
       z.object({
         id: z.string().transform(Number),
         name: z.string(),
+        parentId: z.number().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       await ctx.db
         .update(categories)
-        .set({ name: input.name })
+        .set({
+          name: input.name,
+          parentId: input.parentId,
+        })
         .where(eq(categories.id, input.id));
     }),
 

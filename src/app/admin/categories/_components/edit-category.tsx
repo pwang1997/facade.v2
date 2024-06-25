@@ -12,14 +12,14 @@ import { type Category } from "./data-table";
 
 export function EditCategoryForm({ id }: { id: string }) {
     const router = useRouter();
-    
+
     const [name, setName] = useState<string>("");
     const [categories, setCategories] = useState<Category[]>([]);
-     const [selectedParentCategoryName, setSelectedParentCategoryName] = useState<string[]>([]);
+    const [selectedParentCategoryName, setSelectedParentCategoryName] = useState<string[]>([]);
 
     const getCategories = api.category.list.useQuery({ offset: 0, limit: 1000 });
     const getCategoryById = api.category.getById.useQuery({ id: id });
-    
+
     const updateCategory = api.category.update.useMutation({
         onSuccess: () => {
             router.push("/admin/categories");
@@ -27,28 +27,30 @@ export function EditCategoryForm({ id }: { id: string }) {
     })
 
     useEffect(() => {
-        if(!getCategories.isLoading && getCategories.isSuccess) {
-          setCategories(getCategories.data as unknown as Category[]);
+        if (!getCategories.isLoading && getCategories.isSuccess) {
+            setCategories(getCategories.data as unknown as Category[]);
         }
-      },[getCategories.data, getCategories.isLoading, getCategories.isSuccess])
+    }, [getCategories.data, getCategories.isLoading, getCategories.isSuccess])
 
     useEffect(() => {
         if (!getCategoryById.isLoading && getCategoryById.isSuccess) {
             const data = getCategoryById.data;
             if (!!data[0]) {
-                const {name, parentId} = data[0];
-                setName(name)
+                const { name, parentId } = data[0];
+                setName(name);
 
                 const parentCategoryName = categories.filter((category => category.id == String(parentId))).map(item => item.name);
-                setSelectedParentCategoryName(!!parentId ? parentCategoryName : [] );
+                setSelectedParentCategoryName(!!parentId ? parentCategoryName : []);
             }
         }
     }, [categories, getCategoryById.data, getCategoryById.isLoading, getCategoryById.isSuccess])
 
     const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        updateCategory.mutate({ id, name });
-    }, [id, name, updateCategory])
+        const parentCategoryId = categories.filter((category => category.name === selectedParentCategoryName[0])).map(item => item.id)[0];
+
+        updateCategory.mutate({ id, name, parentId : Number(parentCategoryId) });
+    }, [categories, id, name, selectedParentCategoryName, updateCategory])
 
 
     return (
@@ -58,7 +60,7 @@ export function EditCategoryForm({ id }: { id: string }) {
         >
             <Label htmlFor="name">Name</Label>
             <Input name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="category name" required />
-      <MultiSelect label="category" values={selectedParentCategoryName} onValuesChange={setSelectedParentCategoryName} data={categories} />
+            <MultiSelect label="category" values={selectedParentCategoryName} onValuesChange={setSelectedParentCategoryName} data={categories} />
 
             <div>
                 <Button type="submit" disabled={updateCategory.isPending}
