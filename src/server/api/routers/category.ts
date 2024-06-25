@@ -26,6 +26,7 @@ export const categoryRouter = createTRPCRouter({
       z.object({
         id: z.number().optional(),
         name: z.string(),
+        parentId : z.number().optional()
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -33,6 +34,7 @@ export const categoryRouter = createTRPCRouter({
         .insert(categories)
         .values({
           name: input.name,
+          parentId : input.parentId
         })
         .onConflictDoNothing({ target: categories.name });
     }),
