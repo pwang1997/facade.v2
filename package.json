@@ -63,6 +63,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.14.8",
     "@types/react": "^18.3.3",
@@ -77,8 +78,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5.5.2",
-    "@tailwindcss/typography": "^0.5.13"
+    "typescript": "^5.5.2"
   },
   "ct3aMetadata": {
     "initVersion": "7.34.0"
