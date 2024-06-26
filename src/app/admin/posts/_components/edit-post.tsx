@@ -1,12 +1,13 @@
 "use client";
 
-import { type FormEvent, useCallback, useEffect, useState } from "react";
+import { type ChangeEvent, type FormEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import MarkdownEditor from "~/components/markdown-editor";
 import { MultiSelect } from "~/components/multi-select";
 import { Button } from "~/components/ui/button";
 import { Switch } from "~/components/ui/switch";
+import { env } from "~/env";
 import { api } from "~/trpc/react";
 import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
@@ -16,11 +17,15 @@ import { getIdsByNames } from "./create-post";
 
 export function EditPostForm({ id }: { id: string }) {
     const router = useRouter();
+
     const [title, setTitle] = useState("");
     const [published, setPublished] = useState(false);
     const [content, setContent] = useState("");
     const [selectedTagNames, setSelectedTagNames] = useState<string[]>([]);
     const [selectedCategoryNames, setSelectedCategoryNames] = useState<string[]>([]);
+    const [uploadedImage, setUploadedImage] = useState();
+
+    const imageBoxRef = useRef<HTMLDivElement>();
 
     const getTags = api.tag.list.useQuery({ offset: 0, limit: 1000 });
     const getCategories = api.category.list.useQuery({ offset: 0, limit: 1000 });
@@ -35,22 +40,21 @@ export function EditPostForm({ id }: { id: string }) {
         },
     })
 
-
-    useEffect(()=> {
+    useEffect(() => {
         if (!getPostTagAssn.isLoading && getPostTagAssn.isSuccess && getTags.isSuccess) {
             const tagIds = getPostTagAssn.data.map((item) => String(item.tagId));
             const tagNames = getTags.data.filter((item) => tagIds.includes(String(item.id))).map(item => item.name);
             setSelectedTagNames(tagNames)
         }
-    },[getPostTagAssn.data, getPostTagAssn.isLoading, getPostTagAssn.isSuccess, getTags.data, getTags.isSuccess])
+    }, [getPostTagAssn.data, getPostTagAssn.isLoading, getPostTagAssn.isSuccess, getTags.data, getTags.isSuccess])
 
-    useEffect(()=> {
+    useEffect(() => {
         if (!getPostCategoryAssn.isLoading && getPostCategoryAssn.isSuccess && getCategories.isSuccess) {
             const categoryIds = getPostCategoryAssn.data.map((item) => String(item.categoryId));
             const categoryNames = getCategories.data.filter((item) => categoryIds.includes(String(item.id))).map(item => item.name);
             setSelectedCategoryNames(categoryNames);
         }
-    },[getCategories.data, getCategories.isSuccess, getPostCategoryAssn.data, getPostCategoryAssn.isLoading, getPostCategoryAssn.isSuccess])
+    }, [getCategories.data, getCategories.isSuccess, getPostCategoryAssn.data, getPostCategoryAssn.isLoading, getPostCategoryAssn.isSuccess])
 
     useEffect(() => {
         if (!getPost.isLoading && getPost.isSuccess) {
@@ -63,7 +67,6 @@ export function EditPostForm({ id }: { id: string }) {
         }
     }, [getPost.data, getPost.isLoading, getPost.isSuccess])
 
-
     const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         updatePost.mutate({
@@ -74,6 +77,35 @@ export function EditPostForm({ id }: { id: string }) {
         });
     }, [content, getCategories?.data, getTags?.data, id, published, selectedCategoryNames, selectedTagNames, title, updatePost])
 
+    const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setUploadedImage(e.target?.files[0]);
+    }, [])
+
+    const handleImageUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!uploadedImage) return;
+
+        const formData = new FormData();
+        formData.append("file", uploadedImage);
+
+        try {
+            const response = await fetch("/api/s3-upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const data = await response.json();
+
+            const imageUrl = `${env.AWS_S3_BUCKET_ENDPOINT}/${(data.fileName as string).replaceAll(' ', '+')}`
+            const el = document.createElement("div");
+            el.innerHTML = imageUrl;
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+            imageBoxRef.current.appendChild(el);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <form
@@ -89,6 +121,11 @@ export function EditPostForm({ id }: { id: string }) {
             <MultiSelect label="tags" values={selectedTagNames} onValuesChange={setSelectedTagNames} data={getTags?.data as unknown[] as Tag[]} />
 
             <MultiSelect label="category" values={selectedCategoryNames} onValuesChange={setSelectedCategoryNames} data={getCategories?.data as unknown[] as Category[]} />
+
+            <Label htmlFor="content">Image Upload</Label>
+            <Input name="image" type="file" onChange={handleFileChange} accept="image/png, image/jpeg" />
+            <Button onClick={handleImageUpload}>Upload</Button>
+            <div ref={imageBoxRef}></div>
 
             <Label htmlFor="content">Content</Label>
             <MarkdownEditor content={content} setContent={setContent} />
