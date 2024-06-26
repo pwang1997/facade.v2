@@ -7,7 +7,6 @@ import MarkdownEditor from "~/components/markdown-editor";
 import { MultiSelect } from "~/components/multi-select";
 import { Button } from "~/components/ui/button";
 import { Switch } from "~/components/ui/switch";
-import { env } from "~/env";
 import { api } from "~/trpc/react";
 import { Input } from "../../../../components/ui/input";
 import { Label } from "../../../../components/ui/label";
@@ -96,10 +95,8 @@ export function EditPostForm({ id }: { id: string }) {
 
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const data = await response.json();
-
-            const imageUrl = `${env.AWS_S3_BUCKET_ENDPOINT}/${(data.fileName as string).replaceAll(' ', '+')}`
             const el = document.createElement("div");
-            el.innerHTML = imageUrl;
+            el.innerHTML = data?.fileLocation;
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
             imageBoxRef.current.appendChild(el);
         } catch (error) {

@@ -31,11 +31,10 @@ async function uploadFileToS3(file: Buffer, fileName: any) {
   return fileName;
 }
 
-export async function POST(request: { formData: () => any; }) {
+export async function POST(request: { formData: () => any }) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
-    
 
     if (!file) {
       return NextResponse.json({ error: "File is required." }, { status: 400 });
@@ -43,8 +42,8 @@ export async function POST(request: { formData: () => any; }) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const fileName = await uploadFileToS3(buffer, file.name);
-
-    return NextResponse.json({ success: true, fileName });
+    const fileLocation = `${env.AWS_S3_BUCKET_ENDPOINT}/${(fileName as string).replaceAll(" ", "+")}`;
+    return NextResponse.json({ success: true, fileName, fileLocation });
   } catch (error) {
     return NextResponse.json({ error });
   }
