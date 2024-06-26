@@ -1,18 +1,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import CommandLineIcon from "~/icons/CommandLineIcon";
 import GitHubIcon from "~/icons/GitHubIcon";
+import { type NestedCategory } from ".";
 import { CommandLine } from "../command-line";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "../ui/navigation-menu";
+import { ListItem, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
-export default function NavMenu({ categories }: { categories: string[] }) {
+
+export default function NavMenu({ categories, }: { categories: NestedCategory[] }) {
     const paths = usePathname();
 
     const [show, setShow] = useState<boolean>(false);
@@ -36,15 +38,32 @@ export default function NavMenu({ categories }: { categories: string[] }) {
                         </NavigationMenuItem>
                         {
                             categories.map((category) => {
-                                return (
-                                    <Fragment key={category}>
-                                        <NavigationMenuItem>
-                                            <NavigationMenuLink href={`/categories/${category}`} className={navigationMenuTriggerStyle()}>
-                                                {category}
+                                if (category?.children?.length === 0) {
+                                    return (
+                                        <NavigationMenuItem key={category.id}>
+                                            <NavigationMenuLink href={`/categories/${category.name}`} className={navigationMenuTriggerStyle()}>
+                                                {category.name}
                                             </NavigationMenuLink>
                                         </NavigationMenuItem>
-                                    </Fragment>
-                                )
+                                    )
+                                } else {
+                                    return (
+                                        <NavigationMenuItem key={category.id}>
+                                            <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                                            <NavigationMenuContent>
+                                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                                    {category.children.map((component) => (
+                                                        <ListItem
+                                                            key={component.id}
+                                                            title={component.name}
+                                                            href={`/categories/${component.name}`}
+                                                        />
+                                                    ))}
+                                                </ul>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                    )
+                                }
                             })
                         }
 

@@ -1,0 +1,1 @@
+ALTER TABLE "knowledge_planet_categories" ADD COLUMN "parent_id" serial NOT NULL;
