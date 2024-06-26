@@ -1,40 +1,61 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Fragment, useCallback, useRef, useState } from "react";
+import { useState } from "react";
 import CommandLineIcon from "~/icons/CommandLineIcon";
 import GitHubIcon from "~/icons/GitHubIcon";
+import { type NestedCategory } from ".";
 import { CommandLine } from "../command-line";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "../ui/navigation-menu";
+import { ListItem, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
-export default function NavMenu({ categories }: { categories: string[] }) {
+
+const components: { title: string; href: string; description: string }[] = [
+    {
+        title: "Alert Dialog",
+        href: "/docs/primitives/alert-dialog",
+        description:
+            "A modal dialog that interrupts the user with important content and expects a response.",
+    },
+    {
+        title: "Hover Card",
+        href: "/docs/primitives/hover-card",
+        description:
+            "For sighted users to preview content available behind a link.",
+    },
+    {
+        title: "Progress",
+        href: "/docs/primitives/progress",
+        description:
+            "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+    },
+    {
+        title: "Scroll-area",
+        href: "/docs/primitives/scroll-area",
+        description: "Visually or semantically separates content.",
+    },
+    {
+        title: "Tabs",
+        href: "/docs/primitives/tabs",
+        description:
+            "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+    },
+    {
+        title: "Tooltip",
+        href: "/docs/primitives/tooltip",
+        description:
+            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    },
+]
+
+export default function NavMenu({ categories, }: { categories: NestedCategory[] }) {
     const paths = usePathname();
 
-    const draggableRef = useRef<HTMLDivElement>(null);
     const [show, setShow] = useState<boolean>(false);
-
-    const handleClose = useCallback((event: MouseEvent<HTMLDivElement>) => {
-        const { clientX, clientY } = event;
-
-        const isWithinComponent = (x: number, y: number) => {
-            if (!!draggableRef.current) {
-                const rect = draggableRef.current?.getBoundingClientRect();
-                return (
-                    x >= rect?.left && x <= rect?.right && y >= rect?.top && y <= rect?.bottom
-                );
-            }
-            return false;
-        };
-
-        if (!isWithinComponent(clientX, clientY)) {
-            setShow(false);
-        }
-    }, [setShow])
 
     if (paths.includes("admin")) return null;
 
@@ -44,16 +65,7 @@ export default function NavMenu({ categories }: { categories: string[] }) {
         bg-neutral-100 dark:bg-dark dark:text-white
         ' aria-label='Global'>
                 {
-                    show && (
-                        <div className={`hidden fixed inset-0 bg-gray-800 bg-opacity-75 sm:flex items-center z-50 w-screen  h-screen flex-col`} onClick={handleClose}
-                            onKeyDown={(e) => { if (e.key === 'Escape') setShow(false) }}>
-                            <div ref={draggableRef}>
-                                <div className="bg-white overflow-hidden transition-all sm:max-w-lg sm:w-full hover:cursor-pointer mx-auto w-xl rounded-lg mt-16" style={{ width: "100vw" }}>
-                                    <CommandLine />
-                                </div>
-                            </div>
-                        </div>
-                    )
+                    show && <CommandLine setShow={setShow} />
                 }
                 <NavigationMenu >
                     <NavigationMenuList>
@@ -64,15 +76,32 @@ export default function NavMenu({ categories }: { categories: string[] }) {
                         </NavigationMenuItem>
                         {
                             categories.map((category) => {
-                                return (
-                                    <Fragment key={category}>
-                                        <NavigationMenuItem>
-                                            <NavigationMenuLink href={`/categories/${category}`} className={navigationMenuTriggerStyle()}>
-                                                {category}
+                                if (category?.children?.length === 0) {
+                                    return (
+                                        <NavigationMenuItem key={category.id}>
+                                            <NavigationMenuLink href={`/categories/${category.name}`} className={navigationMenuTriggerStyle()}>
+                                                {category.name}
                                             </NavigationMenuLink>
                                         </NavigationMenuItem>
-                                    </Fragment>
-                                )
+                                    )
+                                } else {
+                                    return (
+                                        <NavigationMenuItem key={category.id}>
+                                            <NavigationMenuTrigger>{category.name}</NavigationMenuTrigger>
+                                            <NavigationMenuContent>
+                                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                                    {category.children.map((component) => (
+                                                        <ListItem
+                                                            key={component.id}
+                                                            title={component.name}
+                                                            href={`/categories/${component.name}`}
+                                                        />
+                                                    ))}
+                                                </ul>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                    )
+                                }
                             })
                         }
 
