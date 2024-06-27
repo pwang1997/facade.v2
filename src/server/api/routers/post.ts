@@ -1,4 +1,4 @@
-import { and, eq, like, or, sql } from "drizzle-orm";
+import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -21,7 +21,8 @@ export const postRouter = createTRPCRouter({
         .select()
         .from(posts)
         .offset(input.offset)
-        .limit(input.limit);
+        .limit(input.limit)
+        .orderBy(desc(posts.updatedAt));
     }),
 
   create: publicProcedure
@@ -140,7 +141,8 @@ export const postRouter = createTRPCRouter({
           ),
         )
         .limit(input.limit ?? 10)
-        .offset(input.offset ?? 0);
+        .offset(input.offset ?? 0)
+        .orderBy(desc(posts.updatedAt));
 
       const postIds = results.map((post) => post.id);
       const associatedTags = await ctx.db
