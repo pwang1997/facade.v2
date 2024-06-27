@@ -38,6 +38,7 @@
     "@trpc/react-query": "next",
     "@trpc/server": "next",
     "@uiw/react-md-editor": "^4.0.4",
+    "@vercel/speed-insights": "^1.0.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",

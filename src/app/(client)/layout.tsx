@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -28,6 +29,7 @@ export default function RootLayout({
             {children}
           </div>
         </TRPCReactProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
