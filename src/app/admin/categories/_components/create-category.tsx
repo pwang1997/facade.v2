@@ -27,7 +27,7 @@ export function CreateCategoryForm() {
     event.preventDefault();
     const parentCategoryId = categories.filter((category => category.name === selectedParentCategoryName[0])).map(item => item.id)[0];
 
-    createCategory.mutate({ name : name, parentId : Number(parentCategoryId)});
+    createCategory.mutate({ name : name, parentId : !!parentCategoryId ? Number(parentCategoryId) : undefined});
   }, [categories, createCategory, name, selectedParentCategoryName])
 
   useEffect(() => {
