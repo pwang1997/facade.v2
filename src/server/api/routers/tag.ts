@@ -1,7 +1,7 @@
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
 import { tags } from "~/server/db/schemas/tags";
 
@@ -21,7 +21,7 @@ export const tagRouter = createTRPCRouter({
         .limit(input.limit);
     }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         id: z.number().optional(),
@@ -43,7 +43,7 @@ export const tagRouter = createTRPCRouter({
       return await ctx.db.select().from(tags).where(eq(tags.id, input.id));
     }),
 
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.string().transform(Number),
@@ -57,7 +57,7 @@ export const tagRouter = createTRPCRouter({
         .where(eq(tags.id, input.id));
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(tags).where(eq(tags.id, input.id));

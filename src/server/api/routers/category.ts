@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { postCategoryAssn } from "~/server/db/schemas/assn/post-category-assn";
 import { categories } from "~/server/db/schemas/categories";
 
@@ -21,7 +21,7 @@ export const categoryRouter = createTRPCRouter({
         .limit(input.limit);
     }),
 
-  create: publicProcedure
+  create: protectedProcedure
     .input(
       z.object({
         id: z.number().optional(),
@@ -48,7 +48,7 @@ export const categoryRouter = createTRPCRouter({
         .where(eq(categories.id, input.id));
     }),
 
-  update: publicProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.string().transform(Number),
@@ -66,7 +66,7 @@ export const categoryRouter = createTRPCRouter({
         .where(eq(categories.id, input.id));
     }),
 
-  delete: publicProcedure
+  delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
       await ctx.db.delete(categories).where(eq(categories.id, input.id));
