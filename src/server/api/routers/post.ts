@@ -1,7 +1,11 @@
 import { and, desc, eq, like, or, sql } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { postCategoryAssn } from "~/server/db/schemas/assn/post-category-assn";
 import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
 import { categories } from "~/server/db/schemas/categories";
@@ -144,6 +148,7 @@ export const postRouter = createTRPCRouter({
         .offset(input.offset ?? 0)
         .orderBy(desc(posts.updatedAt));
 
+      if (results.length === 0) return { results };
       const postIds = results.map((post) => post.id);
       const associatedTags = await ctx.db
         .select({
@@ -212,8 +217,7 @@ export const postRouter = createTRPCRouter({
     }),
 });
 
-
 export interface AssociatedTagProps {
-  postId : string | number
-  tagName : string
+  postId: string | number;
+  tagName: string;
 }

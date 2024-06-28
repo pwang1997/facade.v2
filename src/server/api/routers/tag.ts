@@ -1,7 +1,11 @@
 import { eq, sql } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { postTagAssn } from "~/server/db/schemas/assn/post-tag-assn";
 import { tags } from "~/server/db/schemas/tags";
 

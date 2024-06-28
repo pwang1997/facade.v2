@@ -1,4 +1,5 @@
 import PostCard from "~/app/_components/post-card";
+import PostsEmptyState from "~/components/empty-state/posts-empty-state";
 import { api } from "~/trpc/server";
 
 export default async function CategoryPage({ params }: { params: { name: string } }) {
@@ -7,6 +8,13 @@ export default async function CategoryPage({ params }: { params: { name: string 
     const postsByCategoryName = await api.post.getPostsByCategoryName({ categoryName: decodeURIComponent(name) });
     const { results, associatedTags } = postsByCategoryName;
 
+    if(results.length === 0) {
+        return(
+            <div className="flex flex-col justify-center">
+                <PostsEmptyState />
+            </div>
+        )
+    }
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {
