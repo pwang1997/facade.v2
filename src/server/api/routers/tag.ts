@@ -13,7 +13,7 @@ export const tagRouter = createTRPCRouter({
   list: publicProcedure
     .input(
       z.object({
-        limit: z.number().default(20),
+        limit: z.number().default(100),
         offset: z.number().default(0),
       }),
     )

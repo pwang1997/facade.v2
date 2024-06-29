@@ -124,7 +124,7 @@ export const postRouter = createTRPCRouter({
       z.object({
         categoryName: z.string(),
         offset: z.number().default(0).optional(),
-        limit: z.number().default(10).optional(),
+        limit: z.number().default(1000).optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -144,7 +144,7 @@ export const postRouter = createTRPCRouter({
             eq(categories.name, input.categoryName),
           ),
         )
-        .limit(input.limit ?? 10)
+        .limit(input.limit ?? 1000)
         .offset(input.offset ?? 0)
         .orderBy(desc(posts.updatedAt));
 
