@@ -10,6 +10,7 @@ import { ListItem, NavigationMenu, NavigationMenuContent, NavigationMenuItem, Na
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
+    { label: "catelogs", href: "catelogs" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
@@ -23,7 +24,7 @@ export default function NavMenu({ categories, }: { categories: NestedCategory[] 
 
     return (
         <header className='w-full sticky top-0 backdrop-blur transition-[background-color,border-width] border-x-0 flex justify-center z-10 pt-4'>
-            <nav className='mx-auto flex max-w-4xl items-center justify-between  rounded-[24px] pl-4 pr-4 pt-2 pb-2
+            <nav className='mx-auto flex max-w-7xl items-center justify-between  rounded-[24px] pl-4 pr-4 pt-2 pb-2
         bg-neutral-100 dark:bg-dark dark:text-white
         ' aria-label='Global'>
                 {
@@ -78,13 +79,11 @@ export default function NavMenu({ categories, }: { categories: NestedCategory[] 
                                 )
                             })
                         }
-
                         <NavigationMenuItem>
                             <NavigationMenuLink href="https://github.com/pwang1997" className={navigationMenuTriggerStyle()}>
                                 <GitHubIcon />
                             </NavigationMenuLink>
                         </NavigationMenuItem>
-
                         <NavigationMenuItem className="hover:cursor-pointer" onClick={() => setShow(!show)}>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 <CommandLineIcon />
