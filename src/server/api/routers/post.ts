@@ -215,6 +215,21 @@ export const postRouter = createTRPCRouter({
 
       return data;
     }),
+
+  getPostCatelogs: publicProcedure
+    .input(z.object({}))
+    .query(async ({ ctx }) => {
+      const data = await ctx.db
+        .select({
+          postId: posts.id,
+          title: posts.title,
+          categoryId: postCategoryAssn.categoryId
+        })
+        .from(posts)
+        .leftJoin(postCategoryAssn, eq(postCategoryAssn.postId, posts.id));
+
+      return data;
+    }),
 });
 
 export interface AssociatedTagProps {
