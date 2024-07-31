@@ -21,7 +21,7 @@ export default async function CatelogsPage() {
       {
         nestedCategories.map((categories) => {
           return (
-            <div key={categories.name}>
+            <div className="capitalize" key={categories.name}>
               <Link href={`/categories/${categories.name}`}>
                 <p className=" text-2xl">{categories.name}</p>
               </Link>
