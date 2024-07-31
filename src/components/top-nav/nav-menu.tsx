@@ -10,7 +10,7 @@ import { ListItem, NavigationMenu, NavigationMenuContent, NavigationMenuItem, Na
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
-    { label: "catelogs", href: "catelogs" },
+    { label: "catalog", href: "catalog" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
