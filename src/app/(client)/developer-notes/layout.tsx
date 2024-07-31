@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Site Notes | Zhengliang Wang"
+  title: "Developer Notes | Puck's Blog",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 
