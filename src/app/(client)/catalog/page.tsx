@@ -37,7 +37,7 @@ export default async function CatelogsPage() {
                           {
                             postsGroupByCategoryId[category.id]?.map((post, key) => {
                               return (
-                                <li className="ml-5" key={key}>
+                                <li className="ml-5 hover:bg-secondary" key={key}>
                                   <Link href={`/posts/${post.title}`}>{post.title}</Link>
                                 </li>
                               )
