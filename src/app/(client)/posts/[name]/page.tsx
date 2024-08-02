@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import MarkdownRender from "~/app/_components/markdown-render";
+import Comment from "~/components/comment";
 import TableOfContents from "~/components/table-of-content";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
@@ -33,37 +34,39 @@ export default async function PostPage({ params }: { params: { name: string } })
     const tocHeadings = extractHeadings(post?.content ?? '');
 
     return (
-        <div className="container grid  grid-cols-12 ">
-            <div className="container col-span-9 flex flex-col gap-y-4">
-                <div className='text-5xl font-bold'>
-                    {post?.title}
-                </div>
-                <div className="flex gap-x-1 dark:text-accent">
-                    Zhengliang Wang edited at {post?.updatedAt.toDateString()}
-                </div>
-                <div className="flex flex-col gap-y-2">
-                    <div className="flex gap-x-2">
-                        {
-                            associatedTags?.map((associatedTag) => {
-                                return (
-                                    <Fragment key={associatedTag.tagName}>
-                                        <Badge>{associatedTag.tagName}</Badge>
-                                    </Fragment>
-                                )
-                            })
-                        }
+        <>
+            <div className="container grid  grid-cols-12 ">
+                <div className="container col-span-9 flex flex-col gap-y-4">
+                    <div className='text-5xl font-bold'>
+                        {post?.title}
                     </div>
+                    <div className="flex gap-x-1 dark:text-accent">
+                        Zhengliang Wang edited at {post?.updatedAt.toDateString()}
+                    </div>
+                    <div className="flex flex-col gap-y-2">
+                        <div className="flex gap-x-2">
+                            {
+                                associatedTags?.map((associatedTag) => {
+                                    return (
+                                        <Fragment key={associatedTag.tagName}>
+                                            <Badge>{associatedTag.tagName}</Badge>
+                                        </Fragment>
+                                    )
+                                })
+                            }
+                        </div>
 
-                    <Separator />
+                        <Separator />
+                    </div>
+                    <div>
+                        <MarkdownRender content={post?.content ?? ''} />
+                    </div>
                 </div>
-                <div>
-                    <MarkdownRender content={post?.content ?? ''} />
+                <div className="container mx-auto col-span-3 p-4">
+                    <TableOfContents headings={tocHeadings} />
                 </div>
             </div>
-            <div className="container mx-auto col-span-3 p-4">
-                <TableOfContents headings={tocHeadings} />
-            </div>
-        </div>
-
+            <Comment />
+        </>
     )
 }
