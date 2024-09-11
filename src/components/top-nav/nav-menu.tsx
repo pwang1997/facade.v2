@@ -6,7 +6,7 @@ import CommandLineIcon from "~/icons/CommandLineIcon";
 import GitHubIcon from "~/icons/GitHubIcon";
 import { type NestedCategory } from ".";
 import { CommandLine } from "../command-line";
-import { ListItem, NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../ui/navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
@@ -37,7 +37,7 @@ export default function NavMenu({ categories, }: { categories: NestedCategory[] 
                                 Home
                             </NavigationMenuLink>
                         </NavigationMenuItem>
-                        {
+                        {/* {
                             categories.map((category) => {
                                 if (category?.children?.length === 0) {
                                     return (
@@ -66,7 +66,7 @@ export default function NavMenu({ categories, }: { categories: NestedCategory[] 
                                     )
                                 }
                             })
-                        }
+                        } */}
 
                         {
                             defaultRoutes.map((route) => {
