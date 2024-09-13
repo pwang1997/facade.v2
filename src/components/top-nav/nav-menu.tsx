@@ -9,10 +9,10 @@ import { CommandLine } from "../command-line";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 const defaultRoutes = [
-    { label: "posts", href: "posts" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
+// { label: "posts", href: "posts" },
 // { label: "catalog", href: "catalog" },
 
 export default function NavMenu({ categories, }: { categories: NestedCategory[] }) {
