@@ -10,10 +10,10 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 
 const defaultRoutes = [
     { label: "posts", href: "posts" },
-    { label: "catalog", href: "catalog" },
     { label: "about", href: "about" },
     { label: "dev notes", href: "developer-notes" }
 ]
+// { label: "catalog", href: "catalog" },
 
 export default function NavMenu({ categories, }: { categories: NestedCategory[] }) {
     const paths = usePathname();

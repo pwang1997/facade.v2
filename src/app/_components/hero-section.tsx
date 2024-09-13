@@ -33,7 +33,7 @@ export default function HeroSection() {
             </div>
 
             <div>
-                <p className="text-xl font-bold py-4 capitalize  animate-fadeIn"    style={{ animationDelay: `300ms`}}>A bit about my Tech Stack:</p>
+                <p className="text-xl font-bold py-4 capitalize  animate-fadeIn" style={{ animationDelay: `300ms`}}>A bit about my Tech Stack:</p>
                 <div className="flex flex-col gap-4">
                     <div>
                         <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white animate-fadeIn" style={{ animationDelay: `300ms`}}>* Frontend:</p>
