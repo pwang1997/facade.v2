@@ -16,6 +16,7 @@ import SassIcon from "~/icons/SassIcon";
 import SpringIcon from "~/icons/SpringIcon";
 import TailwindIcon from "~/icons/TailwindIcon";
 import TypeScriptIcon from "~/icons/TypeScriptIcon";
+import DownloadableFileItem from "../(client)/about/_components/DownloadableFileItem";
 import TypeWriter from "./type-writer";
 
 export default function HeroSection() {
@@ -109,6 +110,17 @@ export default function HeroSection() {
             <p className="pt-4 text-lg font-semibold  " style={{ animationDelay: `0` }}>
                 Here you will find my working projects, blogs about technologies, leetcode solutions, and interesting issues I encountered from work.
             </p>
+            <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0'>
+                <dd className='mt-2 text-sm text-gray-900 sm:col-span-1 sm:mt-0'>
+                    <ul className='divide-y divide-gray-100 rounded-md border border-gray-200'>
+                        <DownloadableFileItem
+                            name='Find My Resume'
+                            href='/resume/ZhengliangWang-SDE-Resume.pdf'
+                            size='176KB'
+                        />
+                    </ul>
+                </dd>
+            </div>
         </div>
     )
 }
