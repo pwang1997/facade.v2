@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import AWSIcon from "~/icons/AWSIcon";
 import DockerIcon from "~/icons/DockerIcon";
 import FirebaseIcon from "~/icons/FirebaseIcon";
@@ -18,12 +19,27 @@ import TailwindIcon from "~/icons/TailwindIcon";
 import TypeScriptIcon from "~/icons/TypeScriptIcon";
 import TypeWriter from "./type-writer";
 
+function ExperienceBlock({ title, children }: { title: string, children: any }) {
+    return (
+        <Card className="text-md font-bold">
+            <CardHeader>
+                <CardTitle className="flex  content-between" >
+                    {title}
+                </CardTitle>
+
+                <CardContent className='line-clamp-3 text-sm font-semibold  text-gray-900 dark:bg-medium dark:text-white'>
+                    {children}
+                </CardContent>
+            </CardHeader>
+        </Card>
+    )
+}
 export default function HeroSection() {
-    const skillItemClass = "flex items-center space-x-3 rtl:space-x-reverse animate-fadeIn";
+    const skillItemClass = "flex items-center space-x-3 rtl:space-x-reverse ";
 
     return (
         <div className="flex flex-col">
-            <div className="animate-fadeIn"
+            <div className=""
              style={{ animationDelay: `0`}}>
                 <p className=" text-4xl pb-4 font-bold ">Welcome!</p>
                 <p className="text-3xl">I am Zhengliang(Puck) Wang</p>
@@ -33,10 +49,30 @@ export default function HeroSection() {
             </div>
 
             <div>
-                <p className="text-xl font-bold py-4 capitalize  animate-fadeIn" style={{ animationDelay: `0`}}>A bit about my Tech Stack:</p>
+                <p className="text-xl font-bold py-4 capitalize  " style={{ animationDelay: `0`}}>A bit about my Tech Stack:</p>
                 <div className="flex flex-col gap-4">
                     <div>
-                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white animate-fadeIn" style={{ animationDelay: `0`}}>* Frontend:</p>
+                        {/* <ExperienceBlock title="Frontend Experience">
+                        <ul className="text-left text-gray-500 dark:text-gray-400 capitalize">
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                                <div className="flex flex-row items-center gap-2">
+                                    ✅ hands-on experience with <HtmlIcon /> HTML5 + <SassIcon /> Sass + <JavaScriptIcon /> JavaScript ES6
+                                </div>
+                            </li>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                                <div className="flex flex-row items-center gap-2">
+                                    ✅ hands-on experience with <TypeScriptIcon /> TypeScript + <NextJsIcon /> Next.js + <TailwindIcon /> Tailwind CSS
+                                </div>
+                            </li>
+
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                                <div className="flex flex-row items-center gap-2">
+                                    ✅ Hands-on experience with <ReactIcon /> React + <ReactQueryIcon /> TanStack Query + <MuiIcon /> Material UI
+                                </div>
+                            </li>
+                        </ul>
+                        </ExperienceBlock> */}
+                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0`}}>* Frontend:</p>
                         <ul className="text-left text-gray-500 dark:text-gray-400 capitalize">
                             <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
                                 <div className="flex flex-row items-center gap-2">
@@ -57,7 +93,7 @@ export default function HeroSection() {
                         </ul>
                     </div>
                     <div>
-                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white animate-fadeIn" style={{ animationDelay: `0`}}>* Backend:</p>
+                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0`}}>* Backend:</p>
                         <ul className="space-y-3 text-left text-gray-500 dark:text-gray-400 capitalize">
                             <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
                                 <div className="flex flex-row items-center gap-2">
@@ -89,7 +125,7 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <p className="pt-4 text-lg font-semibold  animate-fadeIn" style={{ animationDelay: `0`}}>
+            <p className="pt-4 text-lg font-semibold  " style={{ animationDelay: `0`}}>
                 Here you will find my working projects, blogs about technologies, leetcode solutions, and interesting issues I encountered from work.
             </p>
         </div>
