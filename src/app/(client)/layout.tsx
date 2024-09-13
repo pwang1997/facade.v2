@@ -6,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import TopNav from "~/components/top-nav";
 import { TRPCReactProvider } from "~/trpc/react";
 import Breadcrumb from "../_components/breadcrumb";
+import Footer from '../_components/Footer';
 
 
 export const metadata = {
@@ -19,13 +20,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${GeistSans.variable}`} style={{ height: "100%" }}>
       <body>
         <TRPCReactProvider>
-          <TopNav />
-          <div className="container mx-auto pt-10">
-            <Breadcrumb />
-            {children}
+          <div className='flex flex-col min-h-dvh'>
+            <div className='flex-grow'>
+              <TopNav />
+              <div className="container mx-auto pt-10 ">
+                <Breadcrumb />
+                {children}
+              </div>
+            </div>
+            <div className='mt-auto'>
+              <Footer />
+            </div>
           </div>
         </TRPCReactProvider>
         <SpeedInsights />

@@ -6,8 +6,8 @@ export default async function Home() {
 
   return (
     <main>
-      <div className='mx-1 pt-96 sm:pt-0 h-[calc(100dvh-64px)] grid gap-y-8 place-content-center absolute sm:relative'>
-        <div className="pt-96 sm:pt-0">
+      <div className='mx-1 sm:pt-0 grid gap-y-8 place-content-center'>
+        <div className="sm:pt-0">
           <HeroSection />
         </div>
         <div>
