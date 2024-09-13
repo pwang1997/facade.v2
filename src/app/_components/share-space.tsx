@@ -31,7 +31,7 @@ export default function ShareSpace() {
 
     return (
         <div className="flex flex-col justify-start">
-            <p className="text-xl font-bold animate-fadeIn pb-2" style={{ animationDelay: `0` }}>Daily Dev Links:</p>
+            <p className="text-xl font-bold pb-2" style={{ animationDelay: `0` }}>Daily Dev Links:</p>
 
             <div className="grid md:grid-rows-2  sm:grid-rows-1 md:grid-flow-col sm:grid-flow-row sm:pr-4 gap-4">
                 <SharingBlock title="News">

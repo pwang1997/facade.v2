@@ -40,7 +40,7 @@ export default function HeroSection() {
     return (
         <div className="flex flex-col">
             <div className=""
-             style={{ animationDelay: `0`}}>
+                style={{ animationDelay: `0` }}>
                 <p className=" text-4xl pb-4 font-bold ">Welcome!</p>
                 <p className="text-3xl">I am Zhengliang(Puck) Wang</p>
                 <p className="typewriter text-2xl">
@@ -49,7 +49,7 @@ export default function HeroSection() {
             </div>
 
             <div>
-                <p className="text-xl font-bold py-4 capitalize  " style={{ animationDelay: `0`}}>A bit about my Tech Stack:</p>
+                <p className="text-xl font-bold py-4 capitalize  " style={{ animationDelay: `0` }}>A bit about my Tech Stack:</p>
                 <div className="flex flex-col gap-4">
                     <div>
                         {/* <ExperienceBlock title="Frontend Experience">
@@ -72,50 +72,67 @@ export default function HeroSection() {
                             </li>
                         </ul>
                         </ExperienceBlock> */}
-                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0`}}>* Frontend:</p>
+                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0` }}>* Frontend:</p>
                         <ul className="text-left text-gray-500 dark:text-gray-400 capitalize">
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ hands-on experience with <HtmlIcon /> HTML5 + <SassIcon /> Sass + <JavaScriptIcon /> JavaScript ES6
+                                    {/* ✅ hands-on experience with <HtmlIcon /> <span className="md:hidden">HTML5</span> + <SassIcon />
+                                    <span className="sm:hidden md:inline">Sass</span> + <JavaScriptIcon />
+                                    <span className="md:hidden">JavaScript ES6</span> */}
+
+                                    ✅Hands-on experience with <HtmlIcon /> <SassIcon /><JavaScriptIcon />
                                 </div>
                             </li>
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ hands-on experience with <TypeScriptIcon /> TypeScript + <NextJsIcon /> Next.js + <TailwindIcon /> Tailwind CSS
+                                    ✅Hands-on experience with <TypeScriptIcon /> <NextJsIcon /><TailwindIcon />
+
+                                    {/* ✅ hands-on experience with <TypeScriptIcon /> TypeScript + <NextJsIcon /> Next.js + <TailwindIcon /> Tailwind CSS */}
                                 </div>
                             </li>
 
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ Hands-on experience with <ReactIcon /> React + <ReactQueryIcon /> TanStack Query + <MuiIcon /> Material UI
+                                    ✅Hands-on experience with <ReactIcon /> <ReactQueryIcon /><MuiIcon />
+
+                                    {/* ✅ Hands-on experience with <ReactIcon /> React + <ReactQueryIcon /> TanStack Query + <MuiIcon /> Material UI */}
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0`}}>* Backend:</p>
+                        <p className="mb-2 text-lg font-semibold text-gray-900 dark:text-white " style={{ animationDelay: `0` }}>* Backend:</p>
                         <ul className="space-y-3 text-left text-gray-500 dark:text-gray-400 capitalize">
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            {/* <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
+                                ✅Hands-on experience with <SpringIcon /> <AWSIcon />
+
                                     ✅ Familiar with Distributed system development using <SpringIcon /> Spring Cloud modules
                                 </div>
-                            </li>
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            </li> */}
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ Years of experience in <SpringIcon /> Spring Boot + <RedisIcon /> Redis + <MySQLIcon /> MySQL
+                                    ✅Hands-on experience with <SpringIcon /> <RedisIcon /><MySQLIcon />
+
+                                    {/* ✅ Years of experience in <SpringIcon /> Spring Boot + <RedisIcon /> Redis + <MySQLIcon /> MySQL */}
                                 </div>
                             </li>
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ Hands-on experience in <NodeJsIcon /> Node.js + <FirebaseIcon /> Firebase + <AWSIcon /> AWS
+                                    ✅Hands-on experience with <NodeJsIcon /> <FirebaseIcon /><AWSIcon />
+
+
+                                    {/* ✅ Hands-on experience in <NodeJsIcon /> Node.js + <FirebaseIcon /> Firebase + <AWSIcon /> AWS */}
                                 </div>
                             </li>
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
-                                    ✅ Deployed multiple services using <DockerIcon /> Docker + <NginxIcon /> Nginx
+                                    ✅Hands-on experience with <DockerIcon /> <NginxIcon />
+
+                                    {/* ✅ Deployed multiple services using <DockerIcon     /> Docker + <NginxIcon /> Nginx */}
                                 </div>
                             </li>
-                            <li className={`${skillItemClass}`} style={{ animationDelay: `0`}}>
+                            <li className={`${skillItemClass}`} style={{ animationDelay: `0` }}>
                                 <div className="flex flex-row items-center gap-2">
                                     📖 Learning <GolangIcon /> Golang at the moment...
                                 </div>
@@ -125,7 +142,7 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <p className="pt-4 text-lg font-semibold  " style={{ animationDelay: `0`}}>
+            <p className="pt-4 text-lg font-semibold  " style={{ animationDelay: `0` }}>
                 Here you will find my working projects, blogs about technologies, leetcode solutions, and interesting issues I encountered from work.
             </p>
         </div>
