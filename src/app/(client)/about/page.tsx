@@ -8,12 +8,14 @@ import LinkedInIcon from '~/icons/LinkedInIcon';
 import MapPinIcon from '~/icons/MapPinIcon';
 import MediumIcon from '~/icons/MediumIcon';
 import UserIcon from '~/icons/UserIcon';
+import { MyParticles } from '../Particles';
 import DownloadableFileItem from './_components/DownloadableFileItem';
 import Timeline from './_components/Timeline';
 
 export default async function AboutPage() {
   return (
     <div>
+      <MyParticles />
       <div className='mt-6 border-t border-gray-100'>
         <dl className='divide-y divide-gray-100'>
           <div className='px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 animate-[fadeIn_2s_ease-in-out]'>
