@@ -30,7 +30,10 @@ export const env = createEnv({
     AWS_S3_REGION: z.string(),
     AWS_S3_BUCKET_NAME: z.string(),
     AWS_S3_BUCKET_ENDPOINT: z.string(),
-    ADMIN_EMAIL : z.string()
+    ADMIN_EMAIL : z.string(),
+
+    LLAMA_CLOUD_API_KEY: z.string(), // Optional for local dev
+    OPENAI_API_KEY: z.string(), // Optional for local dev
   },
 
   /**
@@ -62,6 +65,8 @@ export const env = createEnv({
     AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME,
     AWS_S3_BUCKET_ENDPOINT: `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_S3_REGION}.amazonaws.com`,
 
+    LLAMA_CLOUD_API_KEY: process.env.LLAMA_CLOUD_API_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
