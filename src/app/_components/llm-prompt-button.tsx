@@ -1,7 +1,7 @@
 "use client";
 
 import { Bot, Menu, Send, User, X } from 'lucide-react';
-import { type FormEvent, useCallback, useState } from 'react';
+import { type FormEvent, useCallback, useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 
 export default function BreathingButton() {
@@ -11,6 +11,10 @@ export default function BreathingButton() {
     { sender: 'bot', text: 'Hello! How can I help you today?' }
   ]);
 
+  useEffect(() => {
+    localStorage.setItem('chat', JSON.stringify(messages));
+  },[messages]);
+  
   const getPrompt = api.llm.ask.useMutation({
     onSuccess: (res) => {
       const botMessage = { sender: 'bot', text: res.response };
