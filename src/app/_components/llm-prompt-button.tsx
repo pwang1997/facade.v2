@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, Menu, Send, User, X } from 'lucide-react';
+import { Bot, Send, User, X } from 'lucide-react';
 import { type FormEvent, useCallback, useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 
@@ -115,7 +115,7 @@ export default function BreathingButton() {
           animation: isMenuOpen ? 'none' : 'breathing 4s ease-in-out infinite'
         }}
       >
-        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        {isMenuOpen ? <X size={24} /> : <Bot size={24} />}
       </button>
 
       {/* CSS Animation Keyframes */}
